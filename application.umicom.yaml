@@ -1,0 +1,39 @@
+schema: umicom.application.v1
+
+application:
+  id: org.umicom.music-studio
+  name: Umicom Music Studio
+  short_name: Music Studio
+  version: 0.1.0
+  executable: umicom-music-studio-console
+  aliases: [music]
+
+framework:
+  minimum_version: 0.9.0
+  compatible_major: 0
+
+frontends:
+  - console
+
+entry:
+  kind: workbench
+  taskbar_group: media
+  pinned_by_default: false
+  default_layout: compose
+
+capabilities:
+  - umicom.media
+  - umicom.ai.media-generation
+  - umicom.ui
+  - umicom.application.experience
+  - umicom.application.federation
+
+source_layout:
+  product_root: src
+  composition_root: src
+  console_frontend: src/console
+
+boundaries:
+  owns_reusable_framework_logic: false
+  owns_persistence: false
+  consumes_framework_services: true
