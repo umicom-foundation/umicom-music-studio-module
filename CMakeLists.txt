@@ -6,9 +6,12 @@
 #   Build a thin C23 product composition over Framework-owned application
 #   experience, runtime and workbench contracts.
 #
-# Created by: Sammy Hegab
-# Organisation: Umicom Foundation
-# Licence: MIT
+# AUTHOR AND ORGANISATION:
+#   Sammy Hegab
+#   Umicom Foundation
+#
+# LICENCE:
+#   MIT
 #-----------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.24)
 
@@ -56,6 +59,8 @@ if(NOT COMMAND umicom_apply_sanitizers)
 endif()
 
 add_library(umicom_music_studio_module STATIC
+    src/application_surface.c
+    src/application_surface_controllers.c
     src/application.c
     src/workspace.c
 )
@@ -87,6 +92,15 @@ if(UMICOM_MUSIC_STUDIO_BUILD_CONSOLE)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(music-application-surface-test
+        tests/test_application_surface.c)
+    target_link_libraries(music-application-surface-test PRIVATE
+        Umicom::music_studio_module)
+    umicom_apply_warnings(music-application-surface-test)
+    umicom_apply_sanitizers(music-application-surface-test)
+    add_test(NAME music.module.application_surface
+             COMMAND music-application-surface-test)
+
     add_executable(music-application-test
         tests/test_application.c)
     target_link_libraries(music-application-test PRIVATE Umicom::music_studio_module)
