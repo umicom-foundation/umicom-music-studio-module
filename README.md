@@ -7,3 +7,8 @@ Music Studio can now start learning, standard and focus layouts through the
 shared Framework product surface. It supplies useful empty states without
 pretending an audio or AI engine ran. See
 [the Music Studio application surface guide](docs/APPLICATION_SURFACE_GUIDE.md).
+
+The native `umicom-music-studio` workstation renders compose, arrange and
+master layouts with Framework-owned identity, appearance, docking, floating,
+grouping and layout editing. Its empty states remain truthful until real audio
+and generation providers are connected.

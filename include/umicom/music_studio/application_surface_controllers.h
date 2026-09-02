@@ -22,6 +22,10 @@
 extern "C" {
 #endif
 
+/**
+ * Add music studio application surface controllers only after its inputs and available
+ * capacity have been checked.
+ */
 UmiStatus umi_music_studio_application_surface_controllers_register(
     UmiApplicationPresentationSurfaceRuntime *runtime, void *context);
 
