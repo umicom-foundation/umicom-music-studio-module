@@ -33,6 +33,17 @@ typedef struct UmiMusicStudioGtkWorkstation UmiMusicStudioGtkWorkstation;
 /** Create Music Studio as a thin client of the shared native product host. */
 UmiStatus umi_music_studio_gtk_workstation_create(
     UmiMusicStudioGtkWorkstation **out_workstation);
+/** Bind the existing shared product identity to a native window before its
+ * first realization. The Framework owns titlebar composition and lifetime;
+ * no application catalogue or appearance state is duplicated. */
+UmiStatus umi_music_studio_gtk_workstation_bind_window(
+    UmiMusicStudioGtkWorkstation *workstation, GtkWindow *window);
+/** Explicitly enable shared user-local SQLite layout checkpoints.
+ * Native launchers opt in after construction; constructors do no checkpoint I/O.
+ * A failed restore leaves the current layout visible and reports its error. */
+UmiStatus umi_music_studio_gtk_workstation_enable_checkpoint_storage(
+    UmiMusicStudioGtkWorkstation *workstation, int restore_saved);
+
 /** Release the creative shell and all Framework services which it owns. */
 void umi_music_studio_gtk_workstation_destroy(
     UmiMusicStudioGtkWorkstation *workstation);

@@ -5,7 +5,9 @@ application:
   name: Umicom Music Studio
   short_name: Music Studio
   version: 0.1.0
-  executable: umicom-music-studio-console
+  executable: umicom-music-studio
+  native_executable: umicom-music-studio
+  console_executable: umicom-music-studio-console
   aliases: [music]
 
 framework:
@@ -14,6 +16,7 @@ framework:
 
 frontends:
   - console
+  - gtk
 
 entry:
   kind: workbench
@@ -32,6 +35,7 @@ source_layout:
   product_root: src
   composition_root: src
   console_frontend: src/console
+  gtk_frontend: src/gtk
 
 boundaries:
   owns_reusable_framework_logic: false
