@@ -16,12 +16,14 @@
 #include "umicom/music_studio/gtk_workstation.h"
 
 #include <stdlib.h>
+#include "umicom/ui/gtk4/creative_workspace.h"
 
 #include "umicom/music_studio/application_surface.h"
 #include "umicom/music_studio/application_surface_controllers.h"
 
 struct UmiMusicStudioGtkWorkstation {
     UmiApplicationProductGtk4Workstation *framework_workstation;
+    UmiCreativeGtkSurface *creative_surface;
 };
 
 /* Music Studio contributes its product boundary while Framework supplies the
@@ -54,6 +56,15 @@ UmiStatus umi_music_studio_gtk_workstation_create(
     status = umi_application_product_gtk4_workstation_create(
         &config, &workstation->framework_workstation);
     /* Preserve the original failure result so the caller can respond to the correct cause. */
+    if (status != UMI_STATUS_OK) {
+        umi_music_studio_gtk_workstation_destroy(workstation);
+        return status;
+    }
+    /* Framework owns editing, note synthesis and persistence. The original
+     * Music controllers and layouts remain composed inside the new surface. */
+    status = UmiCreativeGtkSurfaceCreate(
+        umi_application_product_gtk4_workstation_widget(workstation->framework_workstation),
+        "music", &workstation->creative_surface);
     if (status != UMI_STATUS_OK) {
         umi_music_studio_gtk_workstation_destroy(workstation);
         return status;
@@ -92,6 +103,9 @@ void umi_music_studio_gtk_workstation_destroy(
      * used.
      */
     if (workstation == NULL) return;
+    /* Detach the borrowed original layout before its Framework owner dies. */
+    UmiCreativeGtkSurfaceDestroy(workstation->creative_surface);
+    workstation->creative_surface = NULL;
     umi_application_product_gtk4_workstation_destroy(
         workstation->framework_workstation);
     workstation->framework_workstation = NULL;
@@ -102,9 +116,17 @@ void umi_music_studio_gtk_workstation_destroy(
 GtkWidget *umi_music_studio_gtk_workstation_widget(
     UmiMusicStudioGtkWorkstation *workstation)
 {
+    /* The direct layout-only widget remains below for engineering review.
+     * The shared surface now exposes the workbench and that original layout
+     * together, without copying Music's controllers or creating another model. */
+#if 0
     return workstation != NULL
         ? umi_application_product_gtk4_workstation_widget(
               workstation->framework_workstation)
+        : NULL;
+#endif
+    return workstation != NULL
+        ? UmiCreativeGtkSurfaceWidget(workstation->creative_surface)
         : NULL;
 }
 

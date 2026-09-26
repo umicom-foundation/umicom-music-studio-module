@@ -208,3 +208,15 @@ umicom_add_application_productisation_contribution(
     TARGET umicom_music_productisation
     SOURCE "src/productisation_contribution.c"
     TEST_SOURCE "tests/test_productisation_contribution.c")
+
+# Compose the common creative document, animation, note and export services.
+# Existing product controllers, consoles, tests and layouts remain active.
+include("${CMAKE_CURRENT_SOURCE_DIR}/../../framework/cmake/UmicomCreativeWorkspace.cmake")
+umicom_attach_creative_workspace(
+    NAME "music"
+    TARGET umicom_music_studio_module)
+
+# Music keeps its dedicated launcher and contributes only a shared surface.
+if(TARGET umicom_music_studio_gtk)
+    target_link_libraries(umicom_music_studio_gtk PUBLIC Umicom::creative_workspace_gtk4)
+endif()
