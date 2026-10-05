@@ -220,3 +220,9 @@ umicom_attach_creative_workspace(
 if(TARGET umicom_music_studio_gtk)
     target_link_libraries(umicom_music_studio_gtk PUBLIC Umicom::creative_workspace_gtk4)
 endif()
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/LOCAL_ASSETS.html" DESTINATION "${CMAKE_INSTALL_DATADIR}/umicom/applications/music/docs")
+
+# Ship the shared creative workflow entry point with the application's help.
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/SONG_AND_VIDEO_WORKFLOWS.html"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/umicom/applications/music/docs")
