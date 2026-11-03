@@ -230,3 +230,7 @@ install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/SONG_AND_VIDEO_WORKFLOWS.html"
 # Keep the caption workflow available in the installed application help.
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/CAPTIONS.html"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/umicom/applications/music/docs")
+
+# Ship the practical native-control guide with the existing product help.
+install(FILES docs/NATIVE_WORKFLOWS.html
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/umicom/applications/music/docs)

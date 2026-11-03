@@ -4,7 +4,7 @@
  *
  * PURPOSE:
  *   Describe useful empty states for creative panels and report local command
- *   preparation without pretending that an AI or audio engine already ran.
+ *   unavailability without pretending that an AI or audio engine already ran.
  *
  * AUTHOR AND ORGANISATION:
  * Sammy Hegab
@@ -48,6 +48,7 @@ static UmiStatus music_controller(
     UmiApplicationPresentationSurfaceUpdate *out_update)
 {
     (void)context;
+    (void)payload;
     /*
      * Protect caller-owned memory by checking that required state is available before it is
      * used.
@@ -64,11 +65,19 @@ static UmiStatus music_controller(
     }
     /* Apply this branch only when its contract condition is satisfied. */
     if (event == UMI_APPLICATION_PRESENTATION_EVENT_COMMAND) {
+        /* The generic layout has no playback or generation executor. Preserve
+         * its former acknowledgement for review; the Framework failure contract
+         * now reports that limitation. Actual note and audio editing remains in
+         * the Framework creative workspace hosted alongside this layout. */
+#if 0
         out_update->state = UMI_APPLICATION_PRESENTATION_STATE_READY;
         (void)snprintf(out_update->message, sizeof(out_update->message),
                        "Prepared creative command: %s",
                        payload != NULL ? payload : "");
         return UMI_STATUS_OK;
+#endif
+        return UmiApplicationPresentationSurfaceFailure(UMI_STATUS_NOT_IMPLEMENTED,
+            "This layout has no creative command service. Use the Creative workspace controls; no audio or generation job was started.", out_update);
     }
     out_update->state = UMI_APPLICATION_PRESENTATION_STATE_EMPTY;
     (void)snprintf(out_update->message, sizeof(out_update->message), "%s",

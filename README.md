@@ -44,3 +44,7 @@ Keep lyrics, a WAV recording and cover artwork in one collection. The **Creative
 The **Audio arrangement** page combines supported PCM WAV assets with timed placements, source trimming, gain and fades. Render in memory, inspect clipping, then export a new stereo WAV. Save the editable arrangement separately from its asset library. See [Arrange audio clips](../../framework/docs/learning/audio-arrangements.html) for the supported formats and complete workflow.
 
 On **Audio clip**, render a range, choose **Load preview for listening**, then press Play. Editing the range retires the player; hiding the page pauses it. Listening volume does not change export gain. See [Listen to audio previews](../../framework/docs/learning/listen-to-audio-previews.html) for supported WAVE files, backend setup and recovery.
+
+## Native workflow guide
+
+Read the [native workflow guide](docs/NATIVE_WORKFLOWS.html) for step-by-step use of the implemented controls, expected results and current limits.
